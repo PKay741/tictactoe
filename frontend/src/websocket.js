@@ -22,7 +22,11 @@
 let socket;
 
 export function connectWebSocket(roomId, onMessage) {
-  socket = new WebSocket(`ws://localhost:8000/ws/${roomId}`);
+  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+  const host = window.location.host;
+  socket = new WebSocket(`${protocol}://${host}/ws/${roomId}`);
+
+  // socket = new WebSocket(`ws://localhost:8000/ws/${roomId}`);
 
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);

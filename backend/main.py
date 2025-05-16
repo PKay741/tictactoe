@@ -1,8 +1,12 @@
 # main.py
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from starlette.responses import Response
 import asyncio
 import random
+import os
 
 app = FastAPI()
 
@@ -13,6 +17,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# # Mount the entire dist folder
+# app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+
+# @app.get("/{full_path:path}")
+# async def serve_spa(full_path: str):
+#     index_path = os.path.join("frontend", "dist", "index.html")
+#     if os.path.exists(index_path):
+#         return FileResponse(index_path)
+#     return Response(status_code=404)
 
 rooms = {}
 
@@ -68,3 +82,8 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str):
 
     except WebSocketDisconnect:
         rooms[room_id].remove(websocket)
+
+
+
+        # Mount the entire dist folder
+app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")

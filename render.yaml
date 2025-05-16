@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: tic-tac-toe-fullstack
+    env: python
+    branch: main
+    plan: starter
+    buildCommand: ""
+    startCommand: "./start.sh"
+    envVars:
+      - key: PORT
+        value: "10000"  # or leave blank to use Render default
+    healthCheckPath: "/"
+    autoDeploy: true

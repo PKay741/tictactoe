@@ -91,16 +91,18 @@ export default function GamePage() {
 
 
   function handleMove(index, symbol) {
-    setBoard((prev) => {
-      const newBoard = [...prev];
-      newBoard[index] = symbol;
-      return newBoard;
-    });
+  setBoard((prev) => {
+    const newBoard = [...prev];
+    newBoard[index] = symbol;
+
+    const result = checkWinner(newBoard);
+    if (result) setWinner(result);
     setTurn(symbol === "X" ? "O" : "X");
 
-    const winner = checkWinner(board);
-    if (winner) setWinner(winner);
-  }
+    return newBoard;
+  });
+}
+
 
 //   function makeMove(index) {
 //     if (board[index] || winner || !isMyTurn) return;
