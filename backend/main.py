@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from starlette.responses import Response
+from fastapi import Request
 import asyncio
 import random
 import os
@@ -26,11 +27,17 @@ app.add_middleware(
 def read_index():
     return FileResponse("frontend/dist/index.html")
 
-#  Catch-all route (IMPORTANT)
+# #  Catch-all route (IMPORTANT)
+# @app.get("/{full_path:path}")
+# def catch_all(full_path: str):
+#     file_path = os.path.join("frontend", "dist", "index.html")
+#     return FileResponse(file_path)
+
 @app.get("/{full_path:path}")
-def catch_all(full_path: str):
-    file_path = os.path.join("frontend", "dist", "index.html")
-    return FileResponse(file_path)
+async def catch_all(request: Request, full_path: str):
+    if "." in full_path:
+        return Response(status_code=404)
+    return FileResponse("frontend/dist/index.html")
 
 
 
