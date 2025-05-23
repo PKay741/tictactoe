@@ -21,6 +21,19 @@ app.add_middleware(
 # # Mount the entire dist folder
 # app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
 
+# Serve the base index.html
+@app.get("/")
+def read_index():
+    return FileResponse("frontend/dist/index.html")
+
+#  Catch-all route (IMPORTANT)
+@app.get("/{full_path:path}")
+def catch_all(full_path: str):
+    file_path = os.path.join("frontend", "dist", "index.html")
+    return FileResponse(file_path)
+
+
+
 # @app.get("/{full_path:path}")
 # async def serve_spa(full_path: str):
 #     index_path = os.path.join("frontend", "dist", "index.html")
@@ -87,3 +100,16 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str):
 
         # Mount the entire dist folder
 app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+
+# # Serve the base index.html
+# @app.get("/")
+# def read_index():
+#     return FileResponse("frontend/dist/index.html")
+
+# #  Catch-all route (IMPORTANT)
+# @app.get("/{full_path:path}")
+# def catch_all(full_path: str):
+#     file_path = os.path.join("frontend", "dist", "index.html")
+#     return FileResponse(file_path)
+
+
