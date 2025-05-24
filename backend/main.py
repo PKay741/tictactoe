@@ -105,8 +105,13 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str):
 
 
 
-        # Mount the entire dist folder
-app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+#         # Mount the entire dist folder
+# app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+
+# ✅ Serve actual static files
+app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
+app.mount("/vite.svg", StaticFiles(directory="frontend/dist"), name="vite-svg")
+
 
 # # Serve the base index.html
 # @app.get("/")
