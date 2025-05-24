@@ -22,10 +22,10 @@ app.add_middleware(
 # # Mount the entire dist folder
 # app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
 
-# Serve the base index.html
-@app.get("/")
-def read_index():
-    return FileResponse("frontend/dist/index.html")
+# # Serve the base index.html
+# @app.get("/")
+# def read_index():
+#     return FileResponse("frontend/dist/index.html")
 
 # #  Catch-all route (IMPORTANT)
 # @app.get("/{full_path:path}")
@@ -33,11 +33,11 @@ def read_index():
 #     file_path = os.path.join("frontend", "dist", "index.html")
 #     return FileResponse(file_path)
 
-@app.get("/{full_path:path}")
-async def catch_all(request: Request, full_path: str):
-    if "." in full_path:
-        return Response(status_code=404)
-    return FileResponse("frontend/dist/index.html")
+# @app.get("/{full_path:path}")
+# async def catch_all(request: Request, full_path: str):
+#     if "." in full_path:
+#         return Response(status_code=404)
+#     return FileResponse("frontend/dist/index.html")
 
 
 
@@ -105,12 +105,12 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str):
 
 
 
-#         # Mount the entire dist folder
-# app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+        # Mount the entire dist folder
+app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
 
-# ✅ Serve actual static files
-app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
-app.mount("/vite.svg", StaticFiles(directory="frontend/dist"), name="vite-svg")
+# # ✅ Serve actual static files
+# app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
+# app.mount("/vite.svg", StaticFiles(directory="frontend/dist"), name="vite-svg")
 
 
 # # Serve the base index.html
